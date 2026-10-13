@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Black Friday | Think Black Travel Far</title>
+  <meta name="description" content="Campanha Black Friday — diga-nos para onde quer viajar e receba uma proposta à sua medida.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <main class="page">
+
+    <!-- 1. TOPO: IMAGEM CENTRADA -->
+    <header class="hero">
+      <img src="logo.png" alt="Think Black Travel Far" class="hero__logo" width="1400" height="444">
+    </header>
+
+    <!-- 2. BLOCO DE TEXTO -->
+    <section class="intro">
+      <h1 class="intro__title">A sua próxima viagem começa <span class="hl">nesta Black Friday</span></h1>
+      <p>
+        Conte-nos para onde quer ir, quando e com quem. A nossa equipa prepara uma proposta
+        personalizada com as melhores condições da campanha Black Friday e entra em contacto consigo.
+      </p>
+      <p class="intro__note">Preencha o formulário abaixo. Demora menos de 2 minutos.</p>
+    </section>
+
+    <!-- 3. FORMULÁRIO -->
+    <section class="form-wrap" aria-labelledby="form-title">
+      <h2 id="form-title" class="sr-only">Formulário de participação</h2>
+
+      <form id="bf-form" novalidate>
+
+        <div class="field">
+          <label for="nome">Nome completo <span class="req" aria-hidden="true">*</span></label>
+          <input id="nome" name="nome" type="text" autocomplete="name" required maxlength="120">
+          <p class="error" data-for="nome"></p>
+        </div>
+
+        <div class="field">
+          <label for="email">E-mail <span class="req" aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" required maxlength="160">
+          <p class="error" data-for="email"></p>
+        </div>
+
+        <div class="field">
+          <label for="whatsapp">Contacto via WhatsApp <span class="req" aria-hidden="true">*</span></label>
+          <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel"
+                 placeholder="+351 912 345 678" required maxlength="25">
+          <p class="error" data-for="whatsapp"></p>
+        </div>
+
+        <div class="field">
+          <label for="destino">Qual o destino (ou os destinos) para onde pretende viajar? <span class="req" aria-hidden="true">*</span></label>
+          <input id="destino" name="destino" type="text" required maxlength="300">
+          <p class="error" data-for="destino"></p>
+        </div>
+
+        <div class="field">
+          <label for="pessoas">Quantas pessoas vão nessa viagem, e qual a sua faixa etária? <span class="req" aria-hidden="true">*</span></label>
+          <input id="pessoas" name="pessoas" type="text" placeholder="Ex.: 2 adultos (30-40) e 1 criança (6)" required maxlength="300">
+          <p class="error" data-for="pessoas"></p>
+        </div>
+
+        <div class="field">
+          <label for="orcamento">Qual é o orçamento disponível para esta viagem? <span class="req" aria-hidden="true">*</span></label>
+          <input id="orcamento" name="orcamento" type="text" placeholder="Ex.: 2.500 €" required maxlength="100">
+          <p class="error" data-for="orcamento"></p>
+        </div>
+
+        <div class="field">
+          <label for="datas">Quais as datas concretas em que pretende realizar esta viagem? <span class="req" aria-hidden="true">*</span></label>
+          <input id="datas" name="datas" type="text" placeholder="Ex.: 10 a 17 de março de 2027" required maxlength="200">
+          <p class="error" data-for="datas"></p>
+        </div>
+
+        <div class="field">
+          <label for="info">Existe alguma informação adicional que queira acrescentar?</label>
+          <textarea id="info" name="info" rows="4" maxlength="2000"></textarea>
+        </div>
+
+        <!-- CONSENTIMENTOS -->
+        <fieldset class="consent">
+          <legend>Privacidade e comunicações</legend>
+
+          <!-- O texto destes dois blocos é o que fica registado no comprovativo PDF.
+               Se o alterar, suba CONSENT_VERSION no script.js e no Code.gs. -->
+          <label class="check">
+            <input type="checkbox" id="privacidade" name="privacidade" required>
+            <span class="check__box" aria-hidden="true"></span>
+            <span class="check__text" id="txt-privacidade">
+              Li e aceito a <a href="POLITICA_PRIVACIDADE_URL" target="_blank" rel="noopener">Política de Privacidade</a>
+              e autorizo o tratamento dos meus dados pessoais para responder a este pedido no âmbito da campanha Black Friday.
+              <span class="req" aria-hidden="true">*</span>
+            </span>
+          </label>
+          <p class="error" data-for="privacidade"></p>
+
+          <label class="check">
+            <input type="checkbox" id="marketing" name="marketing">
+            <span class="check__box" aria-hidden="true"></span>
+            <span class="check__text" id="txt-marketing">
+              Aceito receber por e-mail comunicações sobre novas campanhas, promoções e novidades.
+              Posso retirar este consentimento a qualquer momento.
+            </span>
+          </label>
+        </fieldset>
+
+        <!-- Honeypot anti-spam: invisível para pessoas, os bots preenchem -->
+        <div class="hp" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn" id="submit-btn">
+          <span class="btn__label">Enviar</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="success" id="success" hidden>
+        <h2>Obrigado pela sua participação!</h2>
+        <p>Recebemos o seu pedido. Enviámos um e-mail de confirmação para <strong id="success-email"></strong>.</p>
+        <p>A nossa equipa vai entrar em contacto consigo em breve.</p>
+      </div>
+    </section>
+
+    <!-- 4. DISCLAIMER -->
+    <footer class="disclaimer">
+      <p>
+        [Disclaimer: inserir aqui o texto legal da campanha — condições, período de validade,
+        identificação da empresa responsável pelo tratamento dos dados, etc.]
+      </p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
