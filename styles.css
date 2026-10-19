@@ -34,6 +34,13 @@ body {
 
 /* ---------- 1. Hero ---------- */
 .hero { text-align: center; margin-bottom: 40px; }
+.hero__top {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  margin: 0 auto 64px;
+}
 .hero__logo {
   display: block;
   width: 100%;
@@ -58,6 +65,17 @@ body {
   color: transparent;
 }
 .intro p { color: var(--muted); margin: 0 auto 12px; max-width: 56ch; }
+/* parágrafo principal: mais largo que a coluna, para ocupar menos linhas */
+.intro p.intro__text,
+.intro p.intro__note,
+.form-wrap {
+  max-width: none;
+  width: min(940px, calc(100vw - 32px));
+  margin-left: 50%;
+  margin-right: 0;
+  transform: translateX(-50%);
+  text-wrap: balance;
+}
 .intro__note { font-size: .95rem; color: var(--accent) !important; font-weight: 600; }
 
 /* ---------- 3. Form ---------- */
@@ -216,12 +234,14 @@ input:focus, textarea:focus {
   text-align: center;
 }
 .disclaimer p {
-  font-size: .78rem;
+  font-size: 20px;
   font-style: italic;
   line-height: 1.5;
   color: #71717a;
-  margin: 0 auto;
-  max-width: 60ch;
+  margin: 0 0 0 50%;
+  max-width: none;
+  width: min(940px, calc(100vw - 32px));
+  transform: translateX(-50%);
 }
 
 .sr-only {
