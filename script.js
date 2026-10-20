@@ -4,7 +4,7 @@
    ========================================================= */
 
 // 1) Cole aqui o URL da implementação da Web App do Apps Script (termina em /exec)
-const APPS_SCRIPT_URL = 'COLE_AQUI_O_URL_DA_WEB_APP';
+const APPS_SCRIPT_URL = 'https://teorioacuriosa-sudo.github.io/BlackFridayDsTravel/';
 
 // 2) Versão do texto dos consentimentos. Se alterar o texto das checkboxes,
 //    suba a versão AQUI e no Code.gs (para o comprovativo refletir o texto certo).
