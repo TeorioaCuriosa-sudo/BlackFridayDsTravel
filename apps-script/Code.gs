@@ -28,6 +28,9 @@ const CONFIG = {
   NOME_EXCEL: 'Respostas Black Friday 2026.xlsx',
 
   // E-mail
+  // Endereço do domínio configurado no Gmail em "Enviar email como".
+  // Se ficar vazio (''), os e-mails saem da conta Google que corre o script.
+  EMAIL_FROM: '',
   EMAIL_NOME_REMETENTE: 'Think Black Travel Far',
   EMAIL_REPLY_TO: 'geral@exemplo.pt',        // <-- e-mail monitorizado para respostas
   EMAIL_NO_REPLY: false,                     // true só funciona em contas Google Workspace
@@ -342,16 +345,25 @@ function enviarEmail_(r) {
       `Equipa ${CONFIG.MARCA}\nReferência: ${r.id}`;
 
     const opts = {
-      to: r.email,
-      subject: CONFIG.EMAIL_ASSUNTO,
-      body: texto,
       htmlBody: html,
       name: CONFIG.EMAIL_NOME_REMETENTE,
     };
     if (CONFIG.EMAIL_NO_REPLY) opts.noReply = true;
     else opts.replyTo = CONFIG.EMAIL_REPLY_TO;
 
-    MailApp.sendEmail(opts);
+    if (CONFIG.EMAIL_FROM) {
+      // Envia a partir do e-mail do domínio (tem de existir como alias em "Enviar email como")
+      const aliases = GmailApp.getAliases();
+      if (aliases.indexOf(CONFIG.EMAIL_FROM) === -1) {
+        throw new Error('O endereço ' + CONFIG.EMAIL_FROM +
+          ' não está configurado em Gmail > Definições > Contas > Enviar email como. Alias disponíveis: ' +
+          aliases.join(', '));
+      }
+      opts.from = CONFIG.EMAIL_FROM;
+      GmailApp.sendEmail(r.email, CONFIG.EMAIL_ASSUNTO, texto, opts);
+    } else {
+      MailApp.sendEmail(Object.assign({ to: r.email, subject: CONFIG.EMAIL_ASSUNTO, body: texto }, opts));
+    }
     return true;
   } catch (err) {
     console.error('Erro ao enviar e-mail: ' + err);
