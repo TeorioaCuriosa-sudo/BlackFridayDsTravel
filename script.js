@@ -4,7 +4,7 @@
    ========================================================= */
 
 // 1) Cole aqui o URL da implementação da Web App do Apps Script (termina em /exec)
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPSKEnv0O2txX9HEaDfAEqy_tnQWpN3MXnUyvY9SIVE5RuoVelX3kjrlMq1zDXUO4esw/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWjIW6dl2eiCQimaK2Tme1a5V6mgcd0337uXS5c8rhQljsZl40FUmwmPAlm9eA6yCifQ/exec';
 
 // 2) Versão do texto dos consentimentos. Se alterar o texto das checkboxes,
 //    suba a versão AQUI e no Code.gs (para o comprovativo refletir o texto certo).
@@ -15,7 +15,7 @@ const btn       = document.getElementById('submit-btn');
 const statusEl  = document.getElementById('form-status');
 const successEl = document.getElementById('success');
 
-const REQUIRED = ['nome', 'email', 'whatsapp', 'destino', 'pessoas', 'orcamento', 'datas'];
+const REQUIRED = ['nome', 'email', 'whatsapp', 'destino', 'pessoas', 'orcamento'];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^\+?[0-9\s().-]{9,20}$/;
 
@@ -101,7 +101,6 @@ form.addEventListener('submit', async (e) => {
     destino:    f.destino.value.trim(),
     pessoas:    f.pessoas.value.trim(),
     orcamento:  f.orcamento.value.trim(),
-    datas:      f.datas.value.trim(),
     info:       f.info.value.trim(),
     privacidade: f.privacidade.checked,
     marketing:   f.marketing.checked,
