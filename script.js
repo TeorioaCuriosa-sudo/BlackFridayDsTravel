@@ -4,7 +4,7 @@
    ========================================================= */
 
 // 1) Cole aqui o URL da implementação da Web App do Apps Script (termina em /exec)
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWjIW6dl2eiCQimaK2Tme1a5V6mgcd0337uXS5c8rhQljsZl40FUmwmPAlm9eA6yCifQ/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx6Sii1pIuTpq_DZ9PMXv37pxvt2eWkGfKAVNa52_SRMPThHA-WNPCX_Wx-YWw5MhsL/exec';
 
 // 2) Versão do texto dos consentimentos. Se alterar o texto das checkboxes,
 //    suba a versão AQUI e no Code.gs (para o comprovativo refletir o texto certo).
@@ -89,6 +89,14 @@ form.addEventListener('submit', async (e) => {
 
   if (!validate()) return;
 
+  // Aviso claro se o endereço do Apps Script ainda não foi configurado
+  if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(APPS_SCRIPT_URL)) {
+    statusEl.textContent = 'Configuração em falta: o endereço do Apps Script (APPS_SCRIPT_URL) não está correto no script.js.';
+    statusEl.classList.add('is-error');
+    console.error('APPS_SCRIPT_URL inválido:', APPS_SCRIPT_URL);
+    return;
+  }
+
   btn.disabled = true;
   btn.classList.add('is-loading');
   btn.querySelector('.btn__label').textContent = 'A enviar…';
@@ -118,7 +126,10 @@ form.addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch (_) { throw new Error('Resposta inesperada do Apps Script (verifique se o acesso está em "Qualquer pessoa"): ' + text.slice(0, 120)); }
     if (!data.ok) throw new Error(data.error || 'Erro desconhecido');
 
     document.getElementById('success-email').textContent = payload.email;
