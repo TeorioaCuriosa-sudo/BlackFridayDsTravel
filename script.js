@@ -4,7 +4,7 @@
    ========================================================= */
 
 // 1) Cole aqui o URL da implementação da Web App do Apps Script (termina em /exec)
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx6Sii1pIuTpq_DZ9PMXv37pxvt2eWkGfKAVNa52_SRMPThHA-WNPCX_Wx-YWw5MhsL/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx6Sii1pIuTpq_DZ9PMXv37pxvt2eWkGfKAVNa52_SRMPThHA-WNPCX_Wx-YWw5MhsL/exec';';
 
 // 2) Versão do texto dos consentimentos. Se alterar o texto das checkboxes,
 //    suba a versão AQUI e no Code.gs (para o comprovativo refletir o texto certo).
@@ -131,6 +131,8 @@ form.addEventListener('submit', async (e) => {
     try { data = JSON.parse(text); }
     catch (_) { throw new Error('Resposta inesperada do Apps Script (verifique se o acesso está em "Qualquer pessoa"): ' + text.slice(0, 120)); }
     if (!data.ok) throw new Error(data.error || 'Erro desconhecido');
+    // Só há sucesso se o servidor devolver o ID do registo (o doGet de teste não devolve)
+    if (!data.id) throw new Error('Resposta sem ID de registo: o pedido não foi processado pelo doPost. Resposta: ' + text.slice(0, 120));
 
     document.getElementById('success-email').textContent = payload.email;
     form.hidden = true;
