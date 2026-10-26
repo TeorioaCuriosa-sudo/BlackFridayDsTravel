@@ -4,7 +4,7 @@
    ========================================================= */
 
 // 1) Cole aqui o URL da implementação da Web App do Apps Script (termina em /exec)
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0QZzD80rvjjQMJclBZEGiWuOp28OpZIdm3dsEsAenAasH_vMidfdPydEpIR7R4jGMlA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwtI1qCOS-kCEtYfICa9cRTXgpL8hRrxzmPF53B9aUY_hEM3aHScyDOs35zd8vckDhUMA/exec';
 
 // 2) Versão do texto dos consentimentos. Se alterar o texto das checkboxes,
 //    suba a versão AQUI e no Code.gs (para o comprovativo refletir o texto certo).
