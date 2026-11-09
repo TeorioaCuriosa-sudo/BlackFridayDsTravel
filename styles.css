@@ -64,7 +64,7 @@ body {
   background-clip: text;
   color: transparent;
 }
-.intro p { color: var(--muted); margin: 0 auto 12px; max-width: 56ch; }
+.intro p { color: white; margin: 0 auto 12px; max-width: 56ch; }
 /* parágrafo principal: mais largo que a coluna, para ocupar menos linhas */
 .intro p.intro__text,
 .intro p.intro__note,
@@ -96,6 +96,15 @@ body {
 }
 .req { color: var(--accent); }
 
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.row .field { min-width: 0; }
+@media (max-width: 420px) { .row { gap: 10px; } }
+.field--small { max-width: 110px; }
+input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+input[type="number"],
 input[type="text"],
 input[type="email"],
 input[type="tel"],

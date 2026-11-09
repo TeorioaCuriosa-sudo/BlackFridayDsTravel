@@ -15,7 +15,7 @@ const btn       = document.getElementById('submit-btn');
 const statusEl  = document.getElementById('form-status');
 const successEl = document.getElementById('success');
 
-const REQUIRED = ['nome', 'email', 'whatsapp', 'destino', 'pessoas', 'orcamento'];
+const REQUIRED = ['nome', 'apelido', 'email', 'whatsapp', 'pessoas'];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^\+?[0-9\s().-]{9,20}$/;
 
@@ -52,6 +52,7 @@ function validate() {
     if (!v) msg = 'Campo obrigatório.';
     else if (name === 'email' && !EMAIL_RE.test(v)) msg = 'Introduza um e-mail válido.';
     else if (name === 'whatsapp' && !PHONE_RE.test(v)) msg = 'Introduza um número válido (ex.: +351 912 345 678).';
+    else if (name === 'pessoas' && !(Number.isInteger(+v) && +v >= 1 && +v <= 99)) msg = 'Indique um número entre 1 e 99.';
     setError(name, msg);
     if (msg) { ok = false; firstInvalid ??= el; }
   });
@@ -103,13 +104,12 @@ form.addEventListener('submit', async (e) => {
 
   const f = form.elements;
   const payload = {
-    nome:       f.nome.value.trim(),
+    nome:       `${f.nome.value.trim()} ${f.apelido.value.trim()}`,
+    primeiroNome: f.nome.value.trim(),
+    apelido:    f.apelido.value.trim(),
     email:      f.email.value.trim().toLowerCase(),
     whatsapp:   f.whatsapp.value.trim(),
-    destino:    f.destino.value.trim(),
     pessoas:    f.pessoas.value.trim(),
-    orcamento:  f.orcamento.value.trim(),
-    info:       f.info.value.trim(),
     privacidade: f.privacidade.checked,
     marketing:   f.marketing.checked,
     consentVersion:   CONSENT_VERSION,   // o texto oficial de cada versão está no Code.gs

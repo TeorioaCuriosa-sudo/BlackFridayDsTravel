@@ -22,21 +22,11 @@
 
     <!-- 2. BLOCO DE TEXTO -->
     <section class="intro">
-      <h1 class="intro__title">A sua próxima viagem começa <span class="hl">nesta Black Friday</span></h1>
+      <h1 class="intro__title"><span class="hl">Entra na lista VIP</span> e desbloqueia descontos exclusivos em viagens.</h1>
       <p class="intro__text">
-       <p>
-          Há viagens que começam com um sonho. Outras, com uma oportunidade que não se deixa escapar.
-       </p>
-       <p>
-        A DS Travel Póvoa de Varzim, agência de viagens que integra o Grupo TeoriaCuriosa, 
-        um grupo empresarial com atuação nas áreas de crédito, seguros, imobiliário e viagens, acredita que cada projeto merece encontrar o caminho certo para se concretizar.
-       </p>
-       <p>
-          Nesta Black Friday, temos algo especial para o levar mais longe. Inscreva-se na nossa lista exclusiva e seja dos primeiros a descobrir a surpresa que temos preparada para si.
-          Porque o mundo é demasiado grande para ficar só nos planos.
-       </p>
+          Black Friday antecipada. Viajar mais. Pagar menos. Só para VIPs.
       </p>
-      <p class="intro__note">Os pedidos serão tratados por ordem de chegada. Preencha o formulário o quanto antes e não perca esta oportunidade!</p>
+      <p class="intro__note">Preencha o formulário o quanto antes e não perca esta oportunidade!</p>
     </section>
 
     <!-- 3. FORMULÁRIO -->
@@ -45,10 +35,18 @@
 
       <form id="bf-form" novalidate>
 
-        <div class="field">
-          <label for="nome">Nome completo <span class="req" aria-hidden="true">*</span></label>
-          <input id="nome" name="nome" type="text" autocomplete="name" required maxlength="120">
-          <p class="error" data-for="nome"></p>
+        <div class="row">
+          <div class="field">
+            <label for="nome">Nome <span class="req" aria-hidden="true">*</span></label>
+            <input id="nome" name="nome" type="text" autocomplete="given-name" required maxlength="60">
+            <p class="error" data-for="nome"></p>
+          </div>
+
+          <div class="field">
+            <label for="apelido">Apelido <span class="req" aria-hidden="true">*</span></label>
+            <input id="apelido" name="apelido" type="text" autocomplete="family-name" required maxlength="60">
+            <p class="error" data-for="apelido"></p>
+          </div>
         </div>
 
         <div class="field">
@@ -64,27 +62,10 @@
           <p class="error" data-for="whatsapp"></p>
         </div>
 
-        <div class="field">
-          <label for="destino">Qual o destino (ou os destinos) para onde pretende viajar? <span class="req" aria-hidden="true">*</span></label>
-          <input id="destino" name="destino" type="text" required maxlength="300">
-          <p class="error" data-for="destino"></p>
-        </div>
-
-        <div class="field">
-          <label for="pessoas">Quantas pessoas vão nessa viagem, e qual a sua faixa etária? <span class="req" aria-hidden="true">*</span></label>
-          <input id="pessoas" name="pessoas" type="text" placeholder="Ex.: 2 adultos (30-40) e 1 criança (6)" required maxlength="300">
+        <div class="field field--small">
+          <label for="pessoas">Nº Pessoas <span class="req" aria-hidden="true">*</span></label>
+          <input id="pessoas" name="pessoas" type="number" inputmode="numeric" min="1" max="99" step="1" required>
           <p class="error" data-for="pessoas"></p>
-        </div>
-
-        <div class="field">
-          <label for="orcamento">Qual é o orçamento disponível para esta viagem? <span class="req" aria-hidden="true">*</span></label>
-          <input id="orcamento" name="orcamento" type="text" placeholder="Ex.: 2.500 €" required maxlength="100">
-          <p class="error" data-for="orcamento"></p>
-        </div>
-
-        <div class="field">
-          <label for="info">Existe alguma informação adicional que queira acrescentar?</label>
-          <textarea id="info" name="info" rows="4" maxlength="2000"></textarea>
         </div>
 
         <!-- CONSENTIMENTOS -->
@@ -138,9 +119,15 @@
     <!-- 4. DISCLAIMER -->
     <footer class="disclaimer">
       <p>
-        A oferta é limitada! Garanta a sua oportunidade de reservar ao melhor preço antes que termine 
-        a disponibilidade promocional. Os lugares disponivéis são limitados, ficando o seu pedido sujeito à 
-        disponibilidade no ato da reserva.
+        A DS Travel Póvoa de Varzim, agência de viagens integrada no 
+        Grupo TeoriaCuriosa, um grupo empresarial com presença nas áreas de crédito, 
+        seguros, imobiliário e viagens, promove esta campanha especial de Black Friday, 
+        com oportunidades exclusivas para a sua próxima viagem.
+      </p>
+      <p>
+       A oferta é limitada! Garanta a oportunidade de reservar a sua próxima viagem ao 
+       melhor preço, antes que termine a disponibilidade promocional. 
+       Os lugares são limitados e os pedidos estão sujeitos à disponibilidade no momento da reserva.
       </p>
     </footer>
 
