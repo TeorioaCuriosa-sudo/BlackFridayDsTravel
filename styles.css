@@ -237,6 +237,50 @@ input:focus, textarea:focus {
 .success h2 { margin: 0 0 12px; font-size: 1.5rem; color: var(--accent); }
 .success p { color: #d4d4d8; margin: 0 0 8px; }
 
+/* ---------- Caixa do formulário em azul do logo, texto preto ---------- */
+.form-wrap {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+.form-wrap .field label,
+.form-wrap .req,
+.form-wrap .consent legend,
+.form-wrap .check,
+.form-wrap .check a,
+.form-wrap .success h2,
+.form-wrap .success p,
+.form-wrap .form-status { color: #000; }
+.form-wrap .check a { text-decoration: underline; font-weight: 700; }
+
+.form-wrap input[type="text"],
+.form-wrap input[type="email"],
+.form-wrap input[type="tel"],
+.form-wrap input[type="number"] {
+  background: #fff;
+  color: #000;
+  border-color: rgba(0, 0, 0, .25);
+}
+.form-wrap input::placeholder { color: #6b6b74; }
+.form-wrap input:focus {
+  border-color: #000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, .2);
+}
+
+.form-wrap .consent { border-color: rgba(0, 0, 0, .35); }
+.form-wrap .check__box { border-color: #000; background: #fff; }
+.form-wrap .check input:checked + .check__box { background: #000; border-color: #000; }
+.form-wrap .check__box::after { border-color: var(--accent); }
+.form-wrap .check input:focus-visible + .check__box { box-shadow: 0 0 0 3px rgba(0, 0, 0, .3); }
+
+.form-wrap .error,
+.form-wrap .form-status.is-error { color: #a30000; font-weight: 700; }
+.form-wrap .field.has-error input { border-color: #a30000; }
+
+/* Botão preto com letras azuis, para destacar sobre o fundo azul */
+.form-wrap .btn { background: #000; color: var(--accent); }
+.form-wrap .btn__spinner { border-color: rgba(90, 223, 255, .3); border-top-color: var(--accent); }
+
 /* ---------- 4. Disclaimer ---------- */
 .disclaimer {
   margin-top: 40px;
