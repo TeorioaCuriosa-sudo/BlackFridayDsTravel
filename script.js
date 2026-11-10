@@ -34,6 +34,92 @@ async function getPublicIP() {
   }
 }
 
+// ---------------------------------------------------------
+// Origem do lead (UTM / referrer)
+// É enviada à frente do "User Agent", que o Apps Script já grava no Sheet,
+// por isso não é preciso alterar o Code.gs.
+// Formato: [origem: fonte | meio | campanha | conteúdo]  ("-" = não indicado)
+// ---------------------------------------------------------
+const ORIGEM_KEY = 'bf_origem';
+const ORIGEM_RE  = /^\[origem: [a-z0-9._ |-]{1,160}\]$/;
+
+// Só letras, números, ponto, hífen e underscore: nada que parta a etiqueta
+// ou que o Sheet interprete como fórmula, mesmo que alguém forje o link.
+function limparOrigem(v) {
+  return String(v || '')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 30);
+}
+
+function etiquetaOrigem(fonte, meio, campanha, conteudo) {
+  return `[origem: ${[fonte, meio, campanha, conteudo].map((x) => x || '-').join(' | ')}]`;
+}
+
+// Sites que costumam aparecer como referrer → nome curto
+const REFERRERS = [
+  [/^mail\.google\.com$/, 'gmail'],
+  [/(^|\.)instagram\.com$/, 'instagram'],
+  [/(^|\.)(facebook\.com|fb\.com|fb\.me)$/, 'facebook'],
+  [/(^|\.)(whatsapp\.com|wa\.me)$/, 'whatsapp'],
+  [/(^|\.)(t\.co|twitter\.com|x\.com)$/, 'x'],
+  [/(^|\.)(linkedin\.com|lnkd\.in)$/, 'linkedin'],
+  [/(^|\.)tiktok\.com$/, 'tiktok'],
+  [/(^|\.)(youtube\.com|youtu\.be)$/, 'youtube'],
+  [/(^|\.)google\./, 'google'],
+  [/(^|\.)bing\.com$/, 'bing'],
+];
+
+// 1.ª escolha: parâmetros do link (?utm_source=...&utm_medium=...&utm_campaign=...&utm_content=...)
+function origemDeUtm() {
+  const q = new URLSearchParams(location.search);
+  const fonte = limparOrigem(q.get('utm_source') || q.get('ref'));
+  if (!fonte) return '';
+  return etiquetaOrigem(
+    fonte,
+    limparOrigem(q.get('utm_medium')),
+    limparOrigem(q.get('utm_campaign')),
+    limparOrigem(q.get('utm_content'))
+  );
+}
+
+// 2.ª escolha: o site de onde a pessoa veio (ignora o próprio site)
+function origemDeReferrer() {
+  let host = '';
+  try { host = new URL(document.referrer).hostname.replace(/^www\./, ''); } catch (_) { return ''; }
+  if (!host || host === location.hostname.replace(/^www\./, '')) return '';
+  const conhecido = REFERRERS.find(([re]) => re.test(host));
+  return etiquetaOrigem(conhecido ? conhecido[1] : limparOrigem(host), 'referral');
+}
+
+// A origem fica guardada nesta visita (separador), para não se perder se a pessoa
+// for ler a Política de Privacidade e voltar ao formulário.
+function lerSessao() {
+  try {
+    const v = sessionStorage.getItem(ORIGEM_KEY) || '';
+    return ORIGEM_RE.test(v) ? v : '';
+  } catch (_) { return ''; }
+}
+function guardarSessao(v) {
+  try { sessionStorage.setItem(ORIGEM_KEY, v); } catch (_) { /* sem armazenamento: segue sem guardar */ }
+}
+
+// Prioridade: link com UTM > origem já guardada nesta visita > referrer > direto
+function detetarOrigem() {
+  const utm = origemDeUtm();
+  if (utm) { guardarSessao(utm); return utm; }
+  const guardada = lerSessao();
+  if (guardada) return guardada;
+  const o = origemDeReferrer() || etiquetaOrigem('direto');
+  guardarSessao(o);
+  return o;
+}
+
+// Calculada logo ao abrir a página
+const ORIGEM = detetarOrigem();
+
 function setError(name, msg) {
   const p = form.querySelector(`.error[data-for="${name}"]`);
   const field = form.querySelector(`#${name}`)?.closest('.field');
@@ -114,7 +200,8 @@ form.addEventListener('submit', async (e) => {
     marketing:   f.marketing.checked,
     consentVersion:   CONSENT_VERSION,   // o texto oficial de cada versão está no Code.gs
     ip:        await getPublicIP(),
-    userAgent:  navigator.userAgent,
+    userAgent:  `${ORIGEM} ${navigator.userAgent}`,   // etiqueta de origem + navegador (campo que o Sheet já guarda)
+    origem:     ORIGEM,
     pagina:     location.href,
     timestampCliente: new Date().toISOString(),
   };
